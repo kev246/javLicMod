@@ -1,7 +1,10 @@
 package Liscense;
 
 import java.io.*;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.security.GeneralSecurityException;
+import java.util.Arrays;
 import java.util.Properties;
 
 public class createPm {
@@ -12,6 +15,7 @@ public class createPm {
      */
 
     public static String getSystemMotherBoard_SerialNumber(){
+
         try{
             String OSName=  System.getProperty("os.name");
             if(OSName.contains("Windows")){
@@ -27,6 +31,21 @@ public class createPm {
         }
     }
 
+    /***
+     * Method for byte array to hex string and vice versa conversion
+     */
+    private static String byteArrayToHString(byte[] b){
+        StringBuffer sb = new StringBuffer(b.length * 2);
+        for (int i = 0; i < b.length; i++){
+            int v = b[i] & 0xff;
+            if (v < 16) {
+                sb.append('0');
+            }
+            sb.append(Integer.toHexString(v));
+        }
+        return sb.toString().toUpperCase();
+    }
+
 
     /**
      * Method for get Windows Machine MotherBoard Serial Number
@@ -34,9 +53,10 @@ public class createPm {
      */
     private static String getWindowsMotherboard_SerialNumber() {
         String result = "";
+
         try {
             File file = File.createTempFile("realhowto",".vbs");
-           // file.deleteOnExit();
+            file.deleteOnExit();
             FileWriter fw = new java.io.FileWriter(file);
 
             String vbs =
@@ -66,6 +86,34 @@ public class createPm {
         return result.trim();
     }
 
+    public static String getDiscSerialNumber(){
+        String result = "";
+        try {
+            File file = File.createTempFile("realhowto",".vbs");
+            file.deleteOnExit();
+            FileWriter fw = new java.io.FileWriter(file);
+
+            String vbs = "Set objFSO = CreateObject(\"Scripting.FileSystemObject\")\n"
+                    +"Set colDrives = objFSO.Drives\n"
+                    +"Set objDrive = colDrives.item(\"winmgmts:\\\\.\\root\\cimv2\")\n"
+                    +"Wscript.Echo objDrive.SerialNumber";  // see note
+            fw.write(vbs);
+            fw.close();
+            Process p = Runtime.getRuntime().exec("cscript //NoLogo " + file.getPath());
+            BufferedReader input =
+                    new BufferedReader
+                            (new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line = input.readLine()) != null) {
+                result += line;
+            }
+            input.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return result.trim();
+    }
 
     /**
      * Method for get Linux Machine MotherBoard Serial Number
@@ -146,7 +194,9 @@ public class createPm {
         else{
             throw new RuntimeException("unable to find system ID");
         }
+
+        }
     }
 
-}
+
 
