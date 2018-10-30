@@ -9,15 +9,12 @@ import java.util.Properties;
 public class mainRunner {
 
     public static void main(String[] args) throws IOException, GeneralSecurityException {
-        String VALID_KEY = "0070123875";
+        /*String VALID_KEY = "0070123875";
         final String EncFile = "encrypted.properties";
         final String KEY_FILE = "EncKeyFile.key";
         Properties PEncFileLoader = new Properties();
-
-
         licenseCheck lc = new licenseCheck();
-
-           System.out.println("id from info file after checking is : "+lc.checkLicense(lc.LiPath).getId());
+        System.out.println("id from info file after checking is : "+lc.checkLicense(lc.LiPath).getId());*/
 
 /*
  ToDo activation is only valid if signature is valid for PN and if PN encryption cypher is same as PMs 16 digit encryption data since we

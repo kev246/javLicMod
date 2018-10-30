@@ -180,11 +180,10 @@ public class createPm {
     Create Pm (property file) or run this class only if there is a request for activation.
      */
     public static void main(String[] args) throws GeneralSecurityException, IOException {
-         String uId = "AJDOEIUJFEENMOEIRQOJW";
+         String uId = ComputerIdentifier.generateLicenseKey();
         final String PNEW_KEY = "NewKeyFile.key";
         final String PNEW_ENCFILE = "PnewEnc.properties";
-        if (getMachineID() != null) {
-            uId +=getMachineID();
+        if (uId != null) {
             Properties pn = new Properties();
             String PnEnc = encDecrExample.encrypt(uId, new File(PNEW_KEY));
             pn.put("MID", PnEnc);
@@ -192,7 +191,7 @@ public class createPm {
 
         }
         else{
-            throw new RuntimeException("unable to find system ID");
+            throw new RuntimeException("unable to find system info");
         }
 
         }

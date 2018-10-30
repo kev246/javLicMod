@@ -4,9 +4,15 @@ package Liscense;
      import oshi.hardware.*;
      import oshi.software.os.OperatingSystem;
 
-     class ComputerIdentifier
+     import java.io.File;
+     import java.io.FileWriter;
+     import java.io.IOException;
+     import java.security.GeneralSecurityException;
+     import java.util.Properties;
+
+class ComputerIdentifier
      {
-     static String generateLicenseKey()
+     private static String generateLicenseKey()
      {
           String diskSerialID="";
           String macAdd = "";
@@ -46,10 +52,22 @@ package Liscense;
      motherBoardIdentifier + delimiter + diskSerialID + delimiter + macAdd;
      }
 
-     public static void main(String[] arguments)
-     {
-     String identifier = generateLicenseKey();
-     System.out.println(identifier);
+     public static void main(String[] arguments) throws GeneralSecurityException, IOException {
+          String uId = generateLicenseKey();
+          System.out.println("unique id is :\n"+uId);
+          final String PNEW_KEY = "NewKeyFile.key";
+          final String PNEW_ENCFILE = "PnewEnc.properties";
+          if (uId != null) {
+               Properties pn = new Properties();
+               String PnEnc = encDecrExample.encrypt(uId, new File(PNEW_KEY));
+               System.out.println("encrypted information is :\n"+PnEnc);
+               pn.put("MID", PnEnc);
+               pn.store(new FileWriter(PNEW_ENCFILE),"Pn created and ready to be send to server for license key activation process");
+
+          }
+          else{
+               throw new RuntimeException("unable to find system info");
+          }
      }
      }
 
