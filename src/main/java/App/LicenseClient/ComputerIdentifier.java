@@ -64,7 +64,7 @@ class ComputerIdentifier
           return keyValue;
           }
 
-          public String halfLengthData(){
+          static String halfLengthData(){
               String uid = createMid();
               String result = uid.replaceAll("[#:/]", "");
               int length = result.length();

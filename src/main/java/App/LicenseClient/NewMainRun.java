@@ -36,6 +36,11 @@ public class NewMainRun extends Base {
         return returnValue;
     }
 
+    private static boolean verifyK() throws Exception {
+        VerifyDigitalSign vks = new VerifyDigitalSign();
+        return ComputerIdentifier.halfLengthData().equals(vks.dContent("MyData/SignedData.txt", "MyKeys/publicKey"));
+    }
+
     public static void main(String[] args) throws Exception {
         //Checking if valid request is present
         new RequestLic();
