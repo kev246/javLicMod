@@ -1,4 +1,4 @@
-package Liscense;
+package App.LicenseClient;
 
 
 import java.io.*;
@@ -12,9 +12,9 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-public class encDecrExample {
+public class SymEncPM {
 
-    public static final String AES = "AES";
+    private static final String AES = "AES";
 
     /**
      * encrypt a value and generate a keyfile
@@ -22,10 +22,10 @@ public class encDecrExample {
      * @throws GeneralSecurityException
      * @throws IOException
      */
-    public static String encrypt(String value, File keyFile)
+    static String encrypt(String value, File keyFile)
             throws GeneralSecurityException, IOException{
         if (!keyFile.exists()) {
-            KeyGenerator keyGen = KeyGenerator.getInstance(encDecrExample.AES);
+            KeyGenerator keyGen = KeyGenerator.getInstance(SymEncPM.AES);
             keyGen.init(128);
             SecretKey sk = keyGen.generateKey();
             FileWriter fw = new FileWriter(keyFile);
@@ -35,45 +35,17 @@ public class encDecrExample {
         }
 
         SecretKeySpec sks = getSecretKeySpec(keyFile);
-        Cipher cipher = Cipher.getInstance(encDecrExample.AES);
+        Cipher cipher = Cipher.getInstance(SymEncPM.AES);
         cipher.init(Cipher.ENCRYPT_MODE, sks, cipher.getParameters());
         byte[] encrypted = cipher.doFinal(value.getBytes());
         return byteArrayToHexString(encrypted);
     }
-//TODO need to modify this method to make proper checks for digital sign validation and enc validation using pnKey made from Pn create class
-    public static boolean verifyLis() throws GeneralSecurityException, IOException {
-        boolean returnValue = false;
-        final String PM_FILE = "PMEncrypted.properties";
-        final String PN_FILE = "PNEncrypted.properties";
-        Properties Pmf = new Properties();
-        Pmf.load(new FileReader(PM_FILE));
 
-        Properties Pnf = new Properties();
-        Pnf.load(new FileReader(PN_FILE));
-        String newEncryptData = Pnf.getProperty("LicenseData:");
-        String oldEncryptData = Pmf.getProperty("LicenseData:");
-            //Check if both encrypt strings are same return true
-        returnValue = newEncryptData.equalsIgnoreCase(oldEncryptData);
-        return returnValue;    }
-
-    /**
-     * decrypt a value
-     * @throws GeneralSecurityException
-     * @throws IOException
-     */
-    public static String decrypt(String message, File keyFile)
-            throws GeneralSecurityException, IOException{
-        SecretKeySpec sks = getSecretKeySpec(keyFile);
-        Cipher cipher = Cipher.getInstance(encDecrExample.AES);
-        cipher.init(Cipher.DECRYPT_MODE, sks);
-        byte[] decrypted = cipher.doFinal(hexStringToByteArray(message));
-        return new String(decrypted);
-    }
 
     private static SecretKeySpec getSecretKeySpec(File keyFile)
             throws NoSuchAlgorithmException, IOException{
         byte [] key = readKeyFile(keyFile);
-        SecretKeySpec sks = new SecretKeySpec(key, encDecrExample.AES);
+        SecretKeySpec sks = new SecretKeySpec(key, SymEncPM.AES);
         return sks;
     }
 
@@ -126,7 +98,7 @@ public class encDecrExample {
             br.close();
         }
     }
-    public static void main(String[] args) throws Exception {
+   /* public static void main(String[] args) throws Exception {
         final String KEY_FILE = "EncKeyFile.key";
         final String NEW_KEY = "NewKeyFile.key";
         final String PWD_FILE = "encrypted.properties";
@@ -139,22 +111,22 @@ public class encDecrExample {
         String mainFile = readFile(path);
         Properties p1 = new Properties();
 
-        String encryptedFile = encDecrExample.encrypt(mainFile, new File(KEY_FILE));
+        String encryptedFile = SymEncPM.encrypt(mainFile, new File(KEY_FILE));
         p1.put("LicenseData:", encryptedFile);
         p1.store(new FileWriter(PWD_FILE), "Encrypted data's Properties file is now created...!");
         System.out.println("Encrypted DATA OF PD1 via P1: \n"+p1.getProperty("LicenseData:"));
         Properties p2 = new Properties();
-        String NewEncOldDataNewKey = encDecrExample.encrypt(mainFile, new File(KEY_FILE));
+        String NewEncOldDataNewKey = SymEncPM.encrypt(mainFile, new File(KEY_FILE));
         p2.put("LicenseData:", NewEncOldDataNewKey);
         p2.store(new FileWriter(NEW_ENCFILE),"Encrypted data with new key..");
         System.out.println("Encrypted DATA OF PD1 via P1: \n"+p2.getProperty("LicenseData:"));
 
         // ==================
-       /* Properties p2 = new Properties();
+        Properties p2 = new Properties();
 
         p2.load(new FileReader(PWD_FILE));
         encryptedFile = p2.getProperty("LicenseData:");
-        System.out.println("Encrypted DATA OF PD1 via P2: \n"+encryptedFile);*/
-        System.out.println("Decrypted value of PD1 is : \n"+encDecrExample.decrypt(encryptedFile, new File(KEY_FILE)));
-    }
+        System.out.println("Encrypted DATA OF PD1 via P2: \n"+encryptedFile);
+        System.out.println("Decrypted value of PD1 is : \n"+ SymEncPM.decrypt(encryptedFile, new File(KEY_FILE)));
+    }*/
 }

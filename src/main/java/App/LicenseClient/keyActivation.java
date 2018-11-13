@@ -1,19 +1,23 @@
 package App.LicenseClient;
 
+import javax.swing.*;
 import java.io.*;
 import java.security.GeneralSecurityException;
 import java.util.Properties;
 
-import static Liscense.encDecrExample.encrypt;
+import static App.LicenseClient.SymEncPM.encrypt;
 
-public class keyActivation {
+public class KeyActivation {
+
+    private static boolean ActFlag = false;
 
     /*
-    on receiving Activation Key (decrypted msg only) inputting on App, i should create a new encrypted data (PN)
+    On receiving Activation Key (decrypted msg only) inputting on App, i should create a new encrypted data (PN)
     using Pm's Key file and also should be signed property file unlike Pd or Pm. */
-    public void makePnEncSigned(String ActivationKey) throws GeneralSecurityException, IOException {
-        String PN_FILE = "PNEncrypted.properties";
-        String PM_KEYFILE = "EncKeyFile.key";
+
+    private static void makePnEncSigned(String ActivationKey) throws GeneralSecurityException, IOException {
+        final String PN_FILE = "KAEncrypted.properties";
+        final String PM_KEYFILE = "abc/NewKeyFile.key";
 
         //Generate new encrypt file with new data and old key
         String newEncryptData = encrypt(ActivationKey, new File(PM_KEYFILE));
@@ -22,7 +26,16 @@ public class keyActivation {
         PnEnc.store(new FileWriter(PN_FILE),"Pn file created withPmKey");
 
     }
-    //TODO method for need to sign this file as well tobe written (before or after encryption?)
 
-    public void signFile(){}
+    public void startAct() {
+        String InputKey = JOptionPane.showInputDialog("Type your message here");
+        try {
+            makePnEncSigned(InputKey);
+            ActFlag = false;
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -17,12 +17,13 @@ import java.util.List;
 
         @SuppressWarnings("unchecked")
         //The constructor of VerifyMessage class retrieves the byte arrays from the File and prints the message only if the signature is verified.
-        public VerifyDigitalSign(String filename, String keyFile) throws Exception {
+        public boolean verify(String filename, String keyFile) throws Exception {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
             this.list = (List<byte[]>) in.readObject();
             in.close();
 
-            System.out.println(verifySignature(list.get(0), list.get(1), keyFile) ? "VERIFIED MESSAGE" + "\n----------------\n" + new String(list.get(0)) : "Could not verify the signature.");
+            //System.out.println(verifySignature(list.get(0), list.get(1), keyFile) ? "VERIFIED MESSAGE" + "\n----------------\n" + new String(list.get(0)) : "Could not verify the signature.");
+            return verifySignature(list.get(0), list.get(1), keyFile);
         }
 
         //Method for signature verification that initializes with the Public Key, updates the data to be verified and then verifies them using the signature
@@ -35,14 +36,11 @@ import java.util.List;
         }
 
         //Method to retrieve the Public Key from a file
-        public PublicKey getPublic(String filename) throws Exception {
+        private PublicKey getPublic(String filename) throws Exception {
             byte[] keyBytes = Files.readAllBytes(new File(filename).toPath());
             X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
             KeyFactory kf = KeyFactory.getInstance("RSA");
             return kf.generatePublic(spec);
         }
 
-        public static void main(String[] args) throws Exception{
-            new VerifyDigitalSign("MyData/SignedData.txt", "MyKeys/publicKey");
-        }
     }

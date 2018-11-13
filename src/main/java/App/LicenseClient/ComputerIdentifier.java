@@ -1,18 +1,24 @@
-package Liscense;
+package App.LicenseClient;
 
+     import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
      import oshi.SystemInfo;
      import oshi.hardware.*;
      import oshi.software.os.OperatingSystem;
 
      import java.io.File;
+     import java.io.FileNotFoundException;
      import java.io.FileWriter;
      import java.io.IOException;
      import java.security.GeneralSecurityException;
      import java.util.Properties;
+     import java.util.Scanner;
 
 class ComputerIdentifier
      {
-     private static String generateLicenseKey()
+          ComputerIdentifier() throws GeneralSecurityException, IOException {
+               createMidFile();
+          }
+     private static String createMid()
      {
           String diskSerialID="";
           String macAdd = "";
@@ -52,22 +58,59 @@ class ComputerIdentifier
      motherBoardIdentifier + delimiter + diskSerialID + delimiter + macAdd;
      }
 
-     public static void main(String[] arguments) throws GeneralSecurityException, IOException {
-          String uId = generateLicenseKey();
-          System.out.println("unique id is :\n"+uId);
-          final String PNEW_KEY = "NewKeyFile.key";
-          final String PNEW_ENCFILE = "PnewEnc.properties";
+     private static String readKeyFile(File keyFile) throws FileNotFoundException {
+          Scanner scanner = new Scanner(keyFile).useDelimiter("\\Z");
+          String keyValue = scanner.next();
+          scanner.close();
+          return keyValue;
+          }
+
+          public String halfLengthData(){
+              String uid = createMid();
+              String result = uid.replaceAll("[#:/]", "");
+              int length = result.length();
+              int x = length/2;
+              result = result.substring(x, length);
+              return result;
+     }
+
+
+         void createMidFile() throws GeneralSecurityException, IOException {
+
+          String uId = createMid();
+          final String resourcePath = System.getProperty("user.dir")+"\\src\\main\\resources\\";
+          String keypath = System.getProperty("user.dir")+"\\abc\\";
+          final String PNEW_KEY = keypath+"NewKeyFile.key";
+          final String PNEW_ENCFILE = resourcePath+"PmEnc.properties";
+
           if (uId != null) {
                Properties pn = new Properties();
-               String PnEnc = encDecrExample.encrypt(uId, new File(PNEW_KEY));
+               String PnEnc = SymEncPM.encrypt(uId, new File(PNEW_KEY));
+               /*
+               TODO remove sout
+                */
                System.out.println("encrypted information is :\n"+PnEnc);
                pn.put("MID", PnEnc);
+               String keyValue = readKeyFile(new File(PNEW_KEY));
+               pn.put("KV", keyValue);
                pn.store(new FileWriter(PNEW_ENCFILE),"Pn created and ready to be send to server for license key activation process");
 
           }
           else{
-               throw new RuntimeException("unable to find system info");
+               throw new RuntimeException("unable to find any system information");
           }
      }
+
+         public static void main(String[] args) {
+             String uid = createMid();
+             System.out.println(uid);
+             String result = uid.replaceAll("[#:/]", "");
+             System.out.println(result);
+             int length = result.length();
+             int x = length/2;
+
+             result = result.substring(x, length);
+             System.out.println(result);
+         }
      }
 

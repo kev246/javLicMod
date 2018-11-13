@@ -54,6 +54,6 @@ import java.security.PublicKey;
             GenerateKeys myKeys = new GenerateKeys(1024);
             myKeys.createKeys();
             myKeys.writeToFile("MyKeys/publicKey", myKeys.getPublicKey().getEncoded());
-            myKeys.writeToFile("MyKeys/privateKey", myKeys.getPrivateKey().getEncoded());
+            myKeys.writeToFile("src/main/resources/privateKey", myKeys.getPrivateKey().getEncoded());
         }
     }

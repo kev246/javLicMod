@@ -1,4 +1,4 @@
-package DigitalSigner;
+package ServerSide;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,19 +16,19 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-    public class fileSigner {
+    public class DigitalFileSigner {
         private List<byte[]> list;
 
-        //The constructor of fileSigner class builds the list that will be written to the file.
+        //The constructor of DigitalFileSigner class builds the list that will be written to the file.
         //The list consists of the message and the signature.
-        public fileSigner(String data, String keyFile) throws InvalidKeyException, Exception {
-            list = new ArrayList<byte[]>();
+        private DigitalFileSigner(String data, String keyFile) throws Exception {
+            list = new ArrayList<>();
             list.add(data.getBytes());
             list.add(sign(data, keyFile));
         }
 
         //The method that signs the data using the private key that is stored in keyFile path
-        public byte[] sign(String data, String keyFile) throws InvalidKeyException, Exception{
+        private byte[] sign(String data, String keyFile) throws Exception{
             Signature rsa = Signature.getInstance("SHA1withRSA");
             rsa.initSign(getPrivate(keyFile));
             rsa.update(data.getBytes());
@@ -36,7 +36,7 @@ import javax.swing.JOptionPane;
         }
 
         //Method to retrieve the Private Key from a file
-        public PrivateKey getPrivate(String filename) throws Exception {
+        private PrivateKey getPrivate(String filename) throws Exception {
             byte[] keyBytes = Files.readAllBytes(new File(filename).toPath());
             PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
             KeyFactory kf = KeyFactory.getInstance("RSA");
@@ -44,17 +44,17 @@ import javax.swing.JOptionPane;
         }
 
         //Method to write the List of byte[] to a file
-        private void writeToFile(String filename) throws FileNotFoundException, IOException {
-            File f = new File(filename);
+        private void writeToFile() throws IOException {
+            File f = new File("MyData/SignedData.txt");
             f.getParentFile().mkdirs();
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename));
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("MyData/SignedData.txt"));
             out.writeObject(list);
             out.close();
             System.out.println("Your file is ready.");
         }
 
-        public static void main(String[] args) throws InvalidKeyException, IOException, Exception{
+        public static void main(String[] args) throws Exception{
             String data = JOptionPane.showInputDialog("Type your message here");
-            new fileSigner(data, "MyKeys/privateKey").writeToFile("MyData/SignedData.txt");
+            new DigitalFileSigner(data, "src/main/resources/privateKey").writeToFile();
         }
     }
