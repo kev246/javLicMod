@@ -1,6 +1,5 @@
 package App.LicenseClient;
 
-     import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
      import oshi.SystemInfo;
      import oshi.hardware.*;
      import oshi.software.os.OperatingSystem;
@@ -83,7 +82,7 @@ class ComputerIdentifier
           final String PNEW_KEY = keypath+"NewKeyFile.key";
           final String PNEW_ENCFILE = resourcePath+"PmEnc.properties";
 
-          if (uId != null) {
+          if (uId != "") {
                Properties pn = new Properties();
                String PnEnc = SymEncPM.encrypt(uId, new File(PNEW_KEY));
                /*
