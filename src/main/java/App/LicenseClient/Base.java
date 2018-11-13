@@ -12,11 +12,12 @@ class Base {
         JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
     }
 
-    static Properties loadPropertyfile(String fileName){
+    static Properties loadPropertyFile(String fileName){
         Properties p1 = new Properties();
         try {
             p1.load(new FileReader(fileName));
         } catch (IOException e) {
+            infoBox("Required File missing or not created.", "ERROR:");
             e.printStackTrace();
         }
         return p1;
@@ -39,4 +40,5 @@ class Base {
             br.close();
         }
     }
+
 }

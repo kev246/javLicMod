@@ -117,7 +117,7 @@ public class DecryptPM {
     public static void main(String[] args) throws IOException, GeneralSecurityException {
         String path = System.getProperty("user.dir");
         String resourcePath = path+"\\src\\main\\resources\\";
-       // path = path + "\\src\\main\\resources\\licenseInfo.properties";
+       // path = path + "\\src\\main\\resources\\flagger.properties";
             final String KEY_FILE = resourcePath+"EncKeyFile.key";
             final String PWD_FILE = resourcePath+"encrypted.properties";
 

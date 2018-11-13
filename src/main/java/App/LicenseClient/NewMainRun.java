@@ -7,12 +7,15 @@ import java.util.Properties;
 
 public class NewMainRun extends Base {
 
-    private final static String DKey = "WEFCDPEFWASOFNWEFOI32984SDFJOWER";
-    private static boolean returnValue = false;
-    //TODO need to modify this method to make proper checks for digital sign validation and enc validation using pnKey made from Pn create class
+    private final static String DKey = "WEFCDPE34432FWASOFNWEFOI32984SDFJOWER";
+
+
+
     private static boolean verifyLis() throws GeneralSecurityException {
+
         final String PM_FILE = "KAEncrypted.properties";
         final String PN_FILE = "src/main/resources/PmEnc.properties";
+        boolean returnValue;
         Properties Pmf = new Properties();
         try {
             Pmf.load(new FileReader(PM_FILE));
@@ -36,9 +39,10 @@ public class NewMainRun extends Base {
     public static void main(String[] args) throws Exception {
         //Checking if valid request is present
         new RequestLic();
+        new ActKey();
         //Else Case
         Properties Pn;
-        Pn = loadPropertyfile("KAEncrypted.properties");
+        Pn = loadPropertyFile("KAEncrypted.properties");
         String key = Pn.getProperty("KV");
         //Checking key is demo or not
         if (!key.equalsIgnoreCase(DKey)){

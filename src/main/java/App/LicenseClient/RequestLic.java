@@ -1,6 +1,7 @@
 package App.LicenseClient;
 
 import DigitalSigner.GenerateKeys;
+
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
@@ -17,7 +18,8 @@ class RequestLic extends Base {
     TODO Make key also unique by modifying it (add mid into key value at the end ,to make a new string not enc but string and then use that as key file later on
      */
     RequestLic() {
-        if (checkReqFileStatus.flag) {
+        if (CheckFlagStat.checkFileForReqStat()) {
+            System.out.println("request status is enabled");
             try {
                 ComputerIdentifier Ci = new ComputerIdentifier();
                 GenerateKeys gk = new GenerateKeys(1024);
@@ -25,15 +27,15 @@ class RequestLic extends Base {
                 gk.writeToFile("MyKeys/publicKey", gk.getPublicKey().getEncoded());
                 gk.writeToFile("src/main/resources/privateKey", gk.getPrivateKey().getEncoded());
                 Ci.createMidFile();
-                checkReqFileStatus.flag = false;
-                infoBox("Please Send over the 2 files at resources location to get Activation File","Action required !");
+                infoBox("Please Send over the 2 files at resources location to get Activation File.\n1. PmEnc \n2. privateKey","Action required !");
             } catch (GeneralSecurityException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else{
+            System.out.println("No request for activation. Looking at available key info...");
         }
-        System.out.println("No request for activation looking at available key info...");
-    }
+       }
 
-}
+    }

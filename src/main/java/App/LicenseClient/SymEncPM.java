@@ -104,7 +104,7 @@ public class SymEncPM {
         final String PWD_FILE = "encrypted.properties";
         final String NEW_ENCFILE = "newEncSameData.properties";
         String path = System.getProperty("user.dir");
-        path = path + "\\src\\main\\resources\\licenseInfo.properties";
+        path = path + "\\src\\main\\resources\\flagger.properties";
         System.out.println(path);
 
 
