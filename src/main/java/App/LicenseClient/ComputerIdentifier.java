@@ -100,17 +100,5 @@ class ComputerIdentifier
                throw new RuntimeException("unable to find any system information");
           }
      }
-
-         public static void main(String[] args) {
-             String uid = createMid();
-             System.out.println(uid);
-             String result = uid.replaceAll("[#:/]", "");
-             System.out.println(result);
-             int length = result.length();
-             int x = length/2;
-
-             result = result.substring(x, length);
-             System.out.println(result);
-         }
      }
 
