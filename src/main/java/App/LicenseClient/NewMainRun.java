@@ -53,10 +53,13 @@ public class NewMainRun extends Base {
         if (!key.equalsIgnoreCase(DKey)){
             VerifyDigitalSign vds = new VerifyDigitalSign();
             if (verifyLis() && vds.verify("MyData/SignedData.txt", "MyKeys/publicKey")){
-            /*
-            TODO start app in full mode
-             */
-                System.out.println("App running in FULL mode....");
+                if (verifyK()){
+                    /*
+                    TODO start app in full mode
+                    */
+                    System.out.println("App running in FULL mode....");
+                }
+
             }else {
                 infoBox("Failed Activation, Please check with Support for more info !","ERROR");
                 System.out.println("App starting in Demo Mode...");
