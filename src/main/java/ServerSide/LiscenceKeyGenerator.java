@@ -27,6 +27,7 @@ public class LiscenceKeyGenerator extends Base {
         try {
             String MID = DecryptPM.decryptData();
             String Output = halfLengthData(MID);
+            System.out.println(Output);
             infoBox(Output,"Unique Key generated:\n");
 
         } catch (IOException e) {

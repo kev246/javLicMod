@@ -12,9 +12,10 @@ import static App.LicenseClient.SymEncPM.encrypt;
 public class ActKey extends Base {
 
 
-    /***
+/***
     On receiving Activation Key (decrypted msg only) inputting on App, i should create a new encrypted data (PN)
     using Pm's Key file and also should be signed property file unlike Pd or Pm. */
+
     public ActKey(){
         if (CheckFlagStat.checkFileForActKeyStat()){
             startAct();
@@ -31,9 +32,10 @@ public class ActKey extends Base {
         Properties PnEnc = new Properties();
         PnEnc.put("LicenseData:", newEncryptData);
 
-        /***Actually activating internally via the digital certificate content itself but given an INPUT BOX to
-        enter for users also which is for the decrypted data that we give back to enter so that user creates the same PN as PM using old key
-         */
+/***Actually activating internally via the digital certificate content itself but given an INPUT BOX to
+        enter for users also which is for the decrypted data that we give back to enter so that user creates the same PN as PM using old key*/
+
+
         VerifyDigitalSign vd = new VerifyDigitalSign();
         try {
             PnEnc.setProperty("KV",vd.dContent("MyData/SignedData.txt", "MyKeys/publicKey"));
@@ -45,7 +47,7 @@ public class ActKey extends Base {
 
     }
 
-    public void startAct() {
+    private void startAct() {
         String InputKey = JOptionPane.showInputDialog("Type your message here");
         try {
             makePnEncSigned(InputKey);

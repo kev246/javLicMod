@@ -95,5 +95,10 @@ class ComputerIdentifier
                throw new RuntimeException("unable to find any system information");
           }
      }
+
+         public static void main(String[] args) {
+             String x = createMid();
+             System.out.println(x);
+         }
      }
 

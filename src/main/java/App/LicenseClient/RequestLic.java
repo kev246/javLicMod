@@ -26,7 +26,6 @@ class RequestLic extends Base {
                 gk.createKeys();
                 gk.writeToFile("MyKeys/publicKey", gk.getPublicKey().getEncoded());
                 gk.writeToFile("src/main/resources/privateKey", gk.getPrivateKey().getEncoded());
-                Ci.createMidFile();
                 infoBox("Please Send over the 2 files at resources location to get Activation File.\n1. PmEnc \n2. privateKey","Action required !");
             } catch (GeneralSecurityException e) {
                 e.printStackTrace();

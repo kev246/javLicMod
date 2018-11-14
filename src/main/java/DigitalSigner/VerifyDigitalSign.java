@@ -15,6 +15,15 @@ import java.util.List;
     public class VerifyDigitalSign {
         private List<byte[]> list;
 
+       /* @SuppressWarnings("unchecked")
+        //The constructor of VerifyMessage class retrieves the byte arrays from the File and prints the message only if the signature is verified.
+        public VerifyDigitalSign(String filename, String keyFile) throws Exception {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
+            this.list = (List<byte[]>) in.readObject();
+            in.close();
+
+            System.out.println(verifySignature(list.get(0), list.get(1), keyFile) ? "VERIFIED MESSAGE" + "\n----------------\n" + new String(list.get(0)) : "Could not verify the signature.");
+        }*/
         @SuppressWarnings("unchecked")
         //The constructor of VerifyMessage class retrieves the byte arrays from the File and prints the message only if the signature is verified.
         public boolean verify(String filename, String keyFile) throws Exception {
@@ -50,5 +59,7 @@ import java.util.List;
             KeyFactory kf = KeyFactory.getInstance("RSA");
             return kf.generatePublic(spec);
         }
+
+
 
     }

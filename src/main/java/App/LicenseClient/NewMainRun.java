@@ -90,4 +90,4 @@ public class NewMainRun extends Base {
  *              Verify license with vds and verifyLis methods created already in this class
  *                  if Verify is true then Start App in full mode
  *                      else THROW ERROR "ACTIVATION FAILED, CONTACT ADMIN"
- */
+*/
