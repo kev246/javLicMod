@@ -34,13 +34,14 @@ import java.util.List;
             //System.out.println(verifySignature(list.get(0), list.get(1), keyFile) ? "VERIFIED MESSAGE" + "\n----------------\n" + new String(list.get(0)) : "Could not verify the signature.");
             return verifySignature(list.get(0), list.get(1), keyFile);
         }
+
+        @SuppressWarnings("unchecked")
         public String dContent(String filename, String keyFile) throws Exception {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
             this.list = (List<byte[]>) in.readObject();
             in.close();
 
-            String value = (verifySignature(list.get(0), list.get(1), keyFile) ? new String(list.get(0)) : null);
-            return value;
+            return (verifySignature(list.get(0), list.get(1), keyFile) ? new String(list.get(0)) : "Not able to verify digital sign");
         }
 
         //Method for signature verification that initializes with the Public Key, updates the data to be verified and then verifies them using the signature
