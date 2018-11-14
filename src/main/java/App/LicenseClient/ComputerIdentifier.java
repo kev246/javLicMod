@@ -85,13 +85,9 @@ class ComputerIdentifier
           if (uId != "") {
                Properties pn = new Properties();
                String PnEnc = SymEncPM.encrypt(uId, new File(PNEW_KEY));
-               /*
-               TODO remove sout
-                */
-               System.out.println("encrypted information is :\n"+PnEnc);
                pn.put("MID", PnEnc);
                String keyValue = readKeyFile(new File(PNEW_KEY));
-               pn.put("KV", keyValue);
+               pn.put("PID", keyValue);
                pn.store(new FileWriter(PNEW_ENCFILE),"Pn created and ready to be send to server for license key activation process");
 
           }

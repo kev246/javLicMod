@@ -5,6 +5,7 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import javax.swing.*;
 import java.io.*;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
@@ -21,6 +22,10 @@ public class DecryptPM {
      * @throws GeneralSecurityException
      * @throws IOException
      */
+
+    static String path = System.getProperty("user.dir");
+    static String resourcePath = path+"\\src\\main\\resources\\";
+
     public static String encrypt(String value, File keyFile)
             throws GeneralSecurityException, IOException{
         if (!keyFile.exists()) {
@@ -109,32 +114,43 @@ public class DecryptPM {
             br.close();
         }
     }
+
+    private static void createKeyFile(String KeyValue){
+        try {
+            String KEY_FILE = resourcePath+"DecryptKeyFile.key";
+            File F1 = new File(KEY_FILE);
+            if (F1.createNewFile()) {
+                FileWriter fws = new FileWriter(KEY_FILE);
+                fws.write(KeyValue);
+                fws.flush();
+                fws.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /***
     NOTE:
     For Decrypt to work the expected requirement is availability of Key and Enc data file in resource folder for server side
      ***/
 
-    public static void main(String[] args) throws IOException, GeneralSecurityException {
-        String path = System.getProperty("user.dir");
-        String resourcePath = path+"\\src\\main\\resources\\";
-       // path = path + "\\src\\main\\resources\\flagger.properties";
-            final String KEY_FILE = resourcePath+"EncKeyFile.key";
-            final String PWD_FILE = resourcePath+"encrypted.properties";
+    public static String decryptData() throws IOException, GeneralSecurityException {
 
-            /*String mainFile = readFile(path);
-            Properties p1 = new Properties();
 
-            String encryptedFile = DecryptPM.encrypt(mainFile, new File(KEY_FILE));
-            p1.put("LicenseData:", encryptedFile);
-            p1.store(new FileWriter(PWD_FILE), "Encrypted data's Properties file is now created...!");
-            System.out.println("Encrypted DATA OF PD1 via P1: \n"+p1.getProperty("LicenseData:"));*/
+
+            final String MID_FILE = resourcePath+"PmEnc.properties";
 
         Properties p2 = new Properties();
-
-        p2.load(new FileReader(PWD_FILE));
-        String encryptedFile = p2.getProperty("LicenseData:");
-        System.out.println("Encrypted DATA OF PD1 via P2: \n"+encryptedFile);
-        System.out.println("Decrypted value of PD1 is : \n"+ DecryptPM.decrypt(encryptedFile, new File(KEY_FILE)));
-
+        /* To enter key manually
+        String InputKey = JOptionPane.showInputDialog("Type your message here");
+         */
+        p2.load(new FileReader(MID_FILE));
+        String keyData = p2.getProperty("KV");
+        createKeyFile(keyData);
+        final String KEY_FILE = resourcePath+"DecryptKeyFile.key";
+        String encryptMessage = p2.getProperty("MID");
+        System.out.println("Encrypted DATA OF PD1 via P2: \n"+encryptMessage);
+        String DecryptMID = DecryptPM.decrypt(encryptMessage, new File(KEY_FILE));
+        return DecryptMID;
     }
 }
