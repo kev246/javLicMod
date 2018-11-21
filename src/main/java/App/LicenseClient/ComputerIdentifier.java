@@ -34,7 +34,7 @@ class ComputerIdentifier
           NetworkIF[] net = hardwareAbstractionLayer.getNetworkIFs(); // for first mac address from list
           if (net.length > 0){
                for (int y = 0; y < net.length; y++){
-                    macAdd = net[2].getMacaddr().trim();
+                    macAdd = net[0].getMacaddr().trim();
                }
           }
 
@@ -96,10 +96,12 @@ class ComputerIdentifier
           }
      }
 
-       /*  public static void main(String[] args) {
+         public static void main(String[] args) {
              String x = createMid();
              System.out.println(x);
              System.out.println(halfLengthData());
-         }*/
+
+
+         }
      }
 
