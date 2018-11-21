@@ -37,12 +37,22 @@ import java.util.List;
         }
 
         @SuppressWarnings("unchecked")
+        /**
+        if dContent has the hard coded value as output then digital sign is wrong and not validated but still we can understand this is the case as hardcode value is
+         false only if the verification fails
+         */
         public String dContent(String filename, String keyFile) throws Exception {
+            String val = "";
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
             this.list = (List<byte[]>) in.readObject();
             in.close();
 
-            return (verifySignature(list.get(0), list.get(1), keyFile) ? new String(list.get(0)) : "Not able to verify digital sign");
+            if (verifySignature(list.get(0), list.get(1), keyFile)){
+                val = new String(list.get(0));
+            }else {
+                val = "XXXXXXXXXXZZZZZZZZZZZZZZYYYYYYYYDDDDDDDDDDSSSSSSSSSSSS";
+            }
+            return val;
         }
 
         //Method for signature verification that initializes with the Public Key, updates the data to be verified and then verifies them using the signature

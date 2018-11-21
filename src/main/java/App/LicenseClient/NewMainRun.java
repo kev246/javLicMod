@@ -11,7 +11,7 @@ public class NewMainRun extends Base {
 
 
 
-    private static boolean verifyLis() throws GeneralSecurityException {
+    private static boolean verifyPnPmData() throws GeneralSecurityException {
 
         final String PM_FILE = "KAEncrypted.properties";
         final String PN_FILE = "src/main/resources/PmEnc.properties";
@@ -38,7 +38,7 @@ public class NewMainRun extends Base {
 
     private static boolean verifyK() throws Exception {
         VerifyDigitalSign vks = new VerifyDigitalSign();
-        return ComputerIdentifier.halfLengthData().equals(vks.dContent("MyData/SignedData.txt", "MyKeys/publicKey"));
+        return ComputerIdentifier.halfLengthData().equals(vks.dContent("MyData/SignedData.txt", "MyKeys/publicKey").equals(loadPropertyFile("KAEncrypted.properties").getProperty("KV")));
     }
 
     public static void main(String[] args) throws Exception {
@@ -52,13 +52,23 @@ public class NewMainRun extends Base {
         //Checking key is demo or not
         if (!key.equalsIgnoreCase(DKey)){
             VerifyDigitalSign vds = new VerifyDigitalSign();
-            if (verifyLis() && vds.verify("MyData/SignedData.txt", "MyKeys/publicKey")){
-                if (verifyK()){
+            if (verifyPnPmData()){
+                if (vds.verify("MyData/SignedData.txt", "MyKeys/publicKey")){
+                    if (verifyK()){
                     /*
                     TODO start app in full mode
                     */
-                    infoBox("FULL MODE ACTIVATED\nKey is valid","INFO:");
-                    System.out.println("App running in FULL mode....");
+                        infoBox("FULL MODE ACTIVATED\nKey is valid","INFO:");
+                        System.out.println("App running in FULL mode....");
+                    }else {
+                        infoBox("Failed Activation, Please check with Support for more info !\n                DEMO MODE ACTIVATED","ERROR");
+                        System.out.println("App starting in Demo Mode...");
+                /*
+                TODO Start App in Demo mode
+                 */
+                    }
+                }else{
+                    infoBox("Failed Digital Sign Verification, Please check with support for more info !\n                DEMO MODE ACTIVATED","ERROR");
                 }
 
             }else {
