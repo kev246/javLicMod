@@ -36,6 +36,7 @@ public class DecryptPM {
             fw.write(byteArrayToHexString(sk.getEncoded()));
             fw.flush();
             fw.close();
+
         }
 
         SecretKeySpec sks = getSecretKeySpec(keyFile);

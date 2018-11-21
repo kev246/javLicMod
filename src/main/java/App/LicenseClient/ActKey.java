@@ -20,7 +20,7 @@ public class ActKey extends Base {
         if (CheckFlagStat.checkFileForActKeyStat()){
             startAct();
         }else{
-            infoBox("Please input Key received for activation at tool settings to continue further with Activation","INFO:");
+            infoBox("Looking for available key information...","INFO:");
         }
     }
     private static void makePnEncSigned(String ActivationKey) throws GeneralSecurityException, IOException {
@@ -48,7 +48,7 @@ public class ActKey extends Base {
     }
 
     private void startAct() {
-        String InputKey = JOptionPane.showInputDialog("Type your message here");
+        String InputKey = JOptionPane.showInputDialog("Please enter your Activation Key below:");
         try {
             makePnEncSigned(InputKey);
         } catch (GeneralSecurityException e) {

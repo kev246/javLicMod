@@ -53,6 +53,7 @@ import javax.swing.JOptionPane;
             System.out.println("Your file is ready.");
         }
 
+
         public static void main(String[] args) throws Exception{
             String data = JOptionPane.showInputDialog("Type your message here");
             new DigitalFileSigner(data, "src/main/resources/privateKey").writeToFile();

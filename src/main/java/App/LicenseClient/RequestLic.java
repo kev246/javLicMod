@@ -20,6 +20,7 @@ class RequestLic extends Base {
     RequestLic() {
         if (CheckFlagStat.checkFileForReqStat()) {
             System.out.println("request status is enabled");
+
             try {
                 ComputerIdentifier Ci = new ComputerIdentifier();
                 GenerateKeys gk = new GenerateKeys(1024);

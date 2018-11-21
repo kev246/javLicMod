@@ -13,7 +13,7 @@ public class CheckFlagStat extends Base{
     static boolean checkFileForReqStat(){
 
         Properties p;
-        p = loadPropertyFile("src/main/resources/flagger.properties");
+        p = loadPropertyFile(System.getProperty("user.dir")+"\\src\\main\\resources\\flagger.properties");
         boolean val = "true".equals(p.getProperty("ReqStat")) ;
         if(val){
             p.setProperty("ReqStat", "false");

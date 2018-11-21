@@ -47,7 +47,6 @@ import java.security.PublicKey;
             fos.write(key);
             fos.flush();
             fos.close();
-
         }
 
         public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchProviderException, IOException {

@@ -33,6 +33,7 @@ import java.util.List;
 
             //System.out.println(verifySignature(list.get(0), list.get(1), keyFile) ? "VERIFIED MESSAGE" + "\n----------------\n" + new String(list.get(0)) : "Could not verify the signature.");
             return verifySignature(list.get(0), list.get(1), keyFile);
+
         }
 
         @SuppressWarnings("unchecked")

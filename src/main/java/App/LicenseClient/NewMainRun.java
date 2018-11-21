@@ -57,6 +57,7 @@ public class NewMainRun extends Base {
                     /*
                     TODO start app in full mode
                     */
+                    infoBox("FULL MODE ACTIVATED\nKey is valid","INFO:");
                     System.out.println("App running in FULL mode....");
                 }
 
@@ -69,6 +70,7 @@ public class NewMainRun extends Base {
             }
         }else {
             System.out.println("Key identified as demo key hence , Starting App in Demo mode...");
+            infoBox("DEMO MODE ACTIVATED\nKey identified is Demo Key","INFO:");
             /*
             TODO Start App in Demo mode
              */
@@ -77,17 +79,3 @@ public class NewMainRun extends Base {
 
 }
 
-/*** =====================================FLOW to IMPLEMENT=================================================
- *  Check if activation flag is true
- *  If true
- *      KeyGeneration (Asymmetric)
- *      MID value and encryption made and keys stored in specific locations
- *      Set Act Flag to Default false again.
- *      Request user to send over 2 files for Activation key
- *  Else (False)
- *  If Key is Demo Key then Start App in demo mode
- *          Else
- *              Verify license with vds and verifyLis methods created already in this class
- *                  if Verify is true then Start App in full mode
- *                      else THROW ERROR "ACTIVATION FAILED, CONTACT ADMIN"
-*/

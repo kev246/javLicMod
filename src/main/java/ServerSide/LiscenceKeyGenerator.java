@@ -14,6 +14,7 @@ public class LiscenceKeyGenerator extends Base {
      * @param Mid
      * @return key created out of unique machine ID created and encrypted , send over, first to be decrypted to get Mid
      */
+
     static String halfLengthData(String Mid) {
         String result = Mid.replaceAll("[#:/]", "");
         int length = result.length();

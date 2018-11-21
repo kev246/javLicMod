@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="mylis:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/mylis_jar</output-path>
+    <root id="archive" name="mylis.jar">
+      <element id="module-output" name="mylis" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/oshi-core.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

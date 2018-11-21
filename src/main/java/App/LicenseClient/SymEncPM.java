@@ -25,6 +25,7 @@ public class SymEncPM {
     static String encrypt(String value, File keyFile)
             throws GeneralSecurityException, IOException{
         if (!keyFile.exists()) {
+
             KeyGenerator keyGen = KeyGenerator.getInstance(SymEncPM.AES);
             keyGen.init(128);
             SecretKey sk = keyGen.generateKey();
