@@ -74,7 +74,7 @@ class ComputerIdentifier
      }
 
 
-         void createMidFile() throws GeneralSecurityException, IOException {
+         private void createMidFile() throws GeneralSecurityException, IOException {
 
           String uId = createMid();
           final String resourcePath = System.getProperty("user.dir")+"\\src\\main\\resources\\";
@@ -82,7 +82,7 @@ class ComputerIdentifier
           final String PNEW_KEY = keypath+"NewKeyFile.key";
           final String PNEW_ENCFILE = resourcePath+"PmEnc.properties";
 
-          if (uId != "") {
+          if (!uId.equals("")) {
                Properties pn = new Properties();
                String PnEnc = SymEncPM.encrypt(uId, new File(PNEW_KEY));
                pn.put("MID", PnEnc);
@@ -96,12 +96,12 @@ class ComputerIdentifier
           }
      }
 
-         public static void main(String[] args) {
+       /*  public static void main(String[] args) {
              String x = createMid();
              System.out.println(x);
              System.out.println(halfLengthData());
 
 
-         }
+         }*/
      }
 

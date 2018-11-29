@@ -1,3 +1,4 @@
+/*
 package ServerSide;
 
 
@@ -16,12 +17,14 @@ public class DecryptPM {
 
     private static final String AES = "AES";
 
-    /**
+    */
+/**
      * encrypt a value and generate a keyfile
      * if the keyfile is not found then a new one is created
      * @throws GeneralSecurityException
      * @throws IOException
-     */
+     *//*
+
 
     static String path = System.getProperty("user.dir");
     static String resourcePath = path+"\\src\\main\\resources\\";
@@ -46,11 +49,13 @@ public class DecryptPM {
         return byteArrayToHexString(encrypted);
     }
 
-    /**
+    */
+/**
      * decrypt a value
      * @throws GeneralSecurityException
      * @throws IOException
-     */
+     *//*
+
     private static String decrypt(String message, File keyFile)
             throws GeneralSecurityException, IOException{
         SecretKeySpec sks = getSecretKeySpec(keyFile);
@@ -130,10 +135,12 @@ public class DecryptPM {
             e.printStackTrace();
         }
     }
-    /***
+    */
+/***
     NOTE:
     For Decrypt to work the expected requirement is availability of Key and Enc data file in resource folder for server side
-     ***/
+     ***//*
+
 
     public static String decryptData() throws IOException, GeneralSecurityException {
 
@@ -142,9 +149,11 @@ public class DecryptPM {
             final String MID_FILE = resourcePath+"PmEnc.properties";
 
         Properties p2 = new Properties();
-        /* To enter key manually
+        */
+/* To enter key manually
         String InputKey = JOptionPane.showInputDialog("Type your message here");
-         */
+         *//*
+
         p2.load(new FileReader(MID_FILE));
         String keyData = p2.getProperty("KV");
         createKeyFile(keyData);
@@ -155,3 +164,4 @@ public class DecryptPM {
         return DecryptMID;
     }
 }
+*/

@@ -1,6 +1,6 @@
 package App.LicenseClient;
 
-import DigitalSigner.GenerateKeys;
+import Asymmetric.SiblingKCreate;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -21,21 +21,26 @@ class RequestLic extends Base {
         if (CheckFlagStat.checkFileForReqStat()) {
             System.out.println("request status is enabled");
 
-            try {
-                ComputerIdentifier Ci = new ComputerIdentifier();
-                GenerateKeys gk = new GenerateKeys(1024);
-                gk.createKeys();
-                gk.writeToFile("MyKeys/publicKey", gk.getPublicKey().getEncoded());
-                gk.writeToFile("src/main/resources/privateKey", gk.getPrivateKey().getEncoded());
-                infoBox("Please Send over the 2 files at resources location to get Activation File.\n1. PmEnc \n2. privateKey","Action required !");
-            } catch (GeneralSecurityException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
         }else{
             System.out.println("No request for activation. Looking at available key info...");
         }
+       }
+
+       protected static void RequestActions(){
+           try {
+               new ComputerIdentifier();
+               SiblingKCreate gk = new SiblingKCreate(1024);
+               gk.createKeys();
+               gk.writeToFile("MyKeys/publicKey", gk.getPublicKey().getEncoded());
+               gk.writeToFile("src/main/resources/privateKey", gk.getPrivateKey().getEncoded());
+           } catch (GeneralSecurityException e) {
+               e.printStackTrace();
+           } catch (IOException e) {
+               e.printStackTrace();
+           } finally {
+               infoBox("Please Send over the 2 files at resources location to get Activation File.\n1. PmEnc \n2. privateKey","Action required !");
+           }
        }
 
     }

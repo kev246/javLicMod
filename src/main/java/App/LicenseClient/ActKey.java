@@ -1,7 +1,5 @@
 package App.LicenseClient;
 
-import DigitalSigner.VerifyDigitalSign;
-
 import javax.swing.*;
 import java.io.*;
 import java.security.GeneralSecurityException;
@@ -9,14 +7,14 @@ import java.util.Properties;
 
 import static App.LicenseClient.SymEncPM.encrypt;
 
-public class ActKey extends Base {
+class ActKey extends Base {
 
 
 /***
     On receiving Activation Key (decrypted msg only) inputting on App, i should create a new encrypted data (PN)
     using Pm's Key file and also should be signed property file unlike Pd or Pm. */
 
-    public ActKey(){
+ActKey(){
         if (CheckFlagStat.checkFileForActKeyStat()){
             startAct();
         }else{
@@ -47,14 +45,18 @@ public class ActKey extends Base {
 
     }
 
-    private void startAct() {
+    protected static void startAct() {
         String InputKey = JOptionPane.showInputDialog("Please enter your Activation Key below:");
-        try {
-            makePnEncSigned(InputKey);
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (InputKey != null) {
+            try {
+                makePnEncSigned(InputKey);
+            } catch (GeneralSecurityException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,"Activation window closed ! \n please try again");
         }
     }
 }

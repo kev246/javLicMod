@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
 
-public class CheckFlagStat extends Base{
+class CheckFlagStat extends Base{
 
     /**
      * Methods to access and reset flags for checks are designed below

@@ -12,7 +12,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-public class SymEncPM {
+class SymEncPM {
 
     private static final String AES = "AES";
 

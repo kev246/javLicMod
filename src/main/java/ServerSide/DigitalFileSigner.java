@@ -1,12 +1,11 @@
 package ServerSide;
 
+import javax.swing.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
-import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.Signature;
@@ -14,9 +13,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
-    public class DigitalFileSigner {
+     class DigitalFileSigner {
         private List<byte[]> list;
 
         //The constructor of DigitalFileSigner class builds the list that will be written to the file.
