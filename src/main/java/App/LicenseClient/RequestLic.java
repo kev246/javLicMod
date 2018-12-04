@@ -5,17 +5,20 @@ import Asymmetric.SiblingKCreate;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+
+/***
+ *
+ * This class helps in creating a request for license purchase for which we need to create Machine specific files and the Public /Private Keys
+ * which will be used to sign and verify Digital Signature flow
+ */
 class RequestLic extends Base {
 
     /*
-    TODO Write logic to create PM (Encrypted) from PD (default prop) using machine motherboard ID
-
-        m1: obtain motherboardID
-        m2: Creating PM ===>>
-        multiply mid with current PID encrypt data and now encrypt that string with 2 property LiscenceID: and MID into a property file(PM) created.
-        Store it in special location as this will be later used to compared lis for comparing msg (no need to decrypt)
-    TODO Send Pm to server side PM which contains Unique new Lis, MID, encrypted within PM.
     TODO Make key also unique by modifying it (add mid into key value at the end ,to make a new string not enc but string and then use that as key file later on
+     */
+
+    /***
+     * The constructor can be used if the requests for these actions within Request Action method needs to be triggered via Flag setting
      */
     RequestLic() {
         if (CheckFlagStat.checkFileForReqStat()) {
@@ -27,7 +30,13 @@ class RequestLic extends Base {
         }
        }
 
-       protected static void RequestActions(){
+    /***
+     * RequestActions method does basically all required operations to initiate a request which includes
+     * 1. creating asymmetric keys (public and private)
+     * 2. creating machine ID and encrypting Symmetrically to make a data file
+     * 3. Prompt box to user to send over the files to Tech M
+     */
+    protected static void RequestActions(){
            try {
                new ComputerIdentifier();
                SiblingKCreate gk = new SiblingKCreate(1024);

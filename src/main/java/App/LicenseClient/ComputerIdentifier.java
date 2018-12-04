@@ -12,12 +12,27 @@ package App.LicenseClient;
      import java.util.Properties;
      import java.util.Scanner;
 
+/***
+ * ComputerIdentifier class is the integration class which utilizes the external open API which helps getting all
+ * required information of the machine and creating the Machine ID in the required format
+ */
 class ComputerIdentifier
      {
+         /***
+          * ComputerIdentifier constructor helps calling the createMidFile which internally creates the Property file for machine ID
+          * @throws GeneralSecurityException
+          * @throws IOException
+          */
           ComputerIdentifier() throws GeneralSecurityException, IOException {
                createMidFile();
           }
-     private static String createMid()
+
+         /***
+          * createMid method helps create the machine id of any usable system /machine using the API calls from external
+          * library which helps return all required kinds of system information independent of OS or machine flavor.
+          * @return machine ID
+          */
+         private static String createMid()
      {
           String diskSerialID="";
           String macAdd = "";
@@ -57,6 +72,12 @@ class ComputerIdentifier
      motherBoardIdentifier + delimiter + diskSerialID + delimiter + macAdd;
      }
 
+         /***
+          * readKeyFile method here helps just read the key value from the key file as plane string
+          * @param keyFile generated from symmetric encryption technique
+          * @return String value of KeyFile
+          * @throws FileNotFoundException if key file not found
+          */
      private static String readKeyFile(File keyFile) throws FileNotFoundException {
           Scanner scanner = new Scanner(keyFile).useDelimiter("\\Z");
           String keyValue = scanner.next();
@@ -64,6 +85,11 @@ class ComputerIdentifier
           return keyValue;
           }
 
+         /***
+          * halfLengthData method is designed to create an extract string data from the resultant machine ID created using
+          * createMid method
+          * @return new code string of machine ID
+          */
           static String halfLengthData(){
               String uid = createMid();
               String result = uid.replaceAll("[#:/]", "");
@@ -73,7 +99,12 @@ class ComputerIdentifier
               return result;
      }
 
-
+         /***
+          * createMidFile method helps create the file which stores the encrypted data of Mid created from same class method createMid
+          * and store in specific file location.
+          * @throws GeneralSecurityException if file not found
+          * @throws IOException if file is missing or not created
+          */
          private void createMidFile() throws GeneralSecurityException, IOException {
 
           String uId = createMid();

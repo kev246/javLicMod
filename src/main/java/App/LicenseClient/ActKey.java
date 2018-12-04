@@ -7,20 +7,28 @@ import java.util.Properties;
 
 import static App.LicenseClient.SymEncPM.encrypt;
 
+/***
+ * ActKey Class helps in starting an activation flow which includes:
+ * 1. Taking user input as Activation Key
+ * 2. Creating Encrypt file using old key data and activation key as message.
+ */
 class ActKey extends Base {
 
-
-/***
-    On receiving Activation Key (decrypted msg only) inputting on App, i should create a new encrypted data (PN)
-    using Pm's Key file and also should be signed property file unlike Pd or Pm. */
-
-ActKey(){
+    ActKey(){
         if (CheckFlagStat.checkFileForActKeyStat()){
             startAct();
         }else{
             infoBox("Looking for available key information...","INFO:");
         }
     }
+
+    /***
+     * makePnEncSigned method helps in creating the required KAEncrypted file and loading it with data of encrypted
+     * activation content in LicenseData key value. also rewriting the important demo key with key obtained from digital sign file
+     * @param ActivationKey given to clients on purchase
+     * @throws GeneralSecurityException if Key file for creating new Encrypt data is missing
+     * @throws IOException if required files are missing
+     */
     private static void makePnEncSigned(String ActivationKey) throws GeneralSecurityException, IOException {
         final String PN_FILE = "KAEncrypted.properties";
         final String PM_KEYFILE = "abc/NewKeyFile.key";
@@ -30,21 +38,23 @@ ActKey(){
         Properties PnEnc = new Properties();
         PnEnc.put("LicenseData:", newEncryptData);
 
-/***Actually activating internally via the digital certificate content itself but given an INPUT BOX to
-        enter for users also which is for the decrypted data that we give back to enter so that user creates the same PN as PM using old key*/
+        Verifications vd = new Verifications();
 
-
-        VerifyDigitalSign vd = new VerifyDigitalSign();
         try {
             PnEnc.setProperty("KV",vd.dContent("MyData/SignedData.txt", "MyKeys/publicKey"));
         } catch (Exception e) {
-            System.out.println("file not found");
+            infoBox("unable to locate datafile for activating full key","ERROR:");
             e.printStackTrace();
         }
+
         PnEnc.store(new FileWriter(PN_FILE),"Pn file created withPmKey");
 
     }
 
+    /***
+     * startAct method helps in starting the whole activation flow from taking inputs to creating required files for
+     * activation and rewriting the demo key with valid key for verification later on.
+     */
     protected static void startAct() {
         String InputKey = JOptionPane.showInputDialog("Please enter your Activation Key below:");
         if (InputKey != null) {

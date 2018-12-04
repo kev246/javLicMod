@@ -12,13 +12,20 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-class SymEncPM {
+/***
+ * SymEnc Class is the first level of symmetric encryption technique implemented within the module for encrypting the
+ * machineID data generated
+ */
+
+public class SymEncPM {
 
     private static final String AES = "AES";
 
-    /**
-     * encrypt a value and generate a keyfile
-     * if the keyfile is not found then a new one is created
+    /***
+     * encrypt method helps in symmetric encryption for the machine ID created using AES algorithm
+     * @param value
+     * @param keyFile
+     * @return String of encrypted data
      * @throws GeneralSecurityException
      * @throws IOException
      */
@@ -42,7 +49,14 @@ class SymEncPM {
         return byteArrayToHexString(encrypted);
     }
 
-
+    /***
+     * The SecretKeySpec method helps in reading the key File data on to a byte Array and later returns an instance
+     * of SecretKeySpec which is only instantiated using byte Array data and Algorithm used.
+     * @param keyFile key file generated from symmetric encryption instantiation.
+     * @return  SecretKeySpec Object
+     * @throws NoSuchAlgorithmException if the mentioned algorithm is not found
+     * @throws IOException if file is missing
+     */
     private static SecretKeySpec getSecretKeySpec(File keyFile)
             throws NoSuchAlgorithmException, IOException{
         byte [] key = readKeyFile(keyFile);
@@ -50,6 +64,12 @@ class SymEncPM {
         return sks;
     }
 
+    /***
+     * readKeyFile method helps in reading the Hex string data stored in key file into a byte array for easy usage in other methods
+     * @param keyFile key file as input from Symmetric encryption
+     * @return byte Array data
+     * @throws FileNotFoundException if file is missing or not found
+     */
     private static byte [] readKeyFile(File keyFile)
             throws FileNotFoundException{
         Scanner scanner =
@@ -59,7 +79,11 @@ class SymEncPM {
         return hexStringToByteArray(keyValue);
     }
 
-
+    /***
+     * byteArrayToHexString method simply helps in convering a given byte array into an Hex String data
+     * @param b input of byte array
+     * @return Hex string data
+     */
     private static String byteArrayToHexString(byte[] b){
         StringBuffer sb = new StringBuffer(b.length * 2);
         for (int i = 0; i < b.length; i++){
@@ -72,6 +96,11 @@ class SymEncPM {
         return sb.toString().toUpperCase();
     }
 
+    /***
+     * hexStringToByteArray method simply helps in converting a given Hex string to Byte Array data
+     * @param s input of string as parameter
+     * @return byte array data
+     */
     private static byte[] hexStringToByteArray(String s) {
         byte[] b = new byte[s.length() / 2];
         for (int i = 0; i < b.length; i++){

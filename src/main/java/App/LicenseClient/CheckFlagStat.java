@@ -4,10 +4,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
 
+
+/**
+ * CheckFlagStat class was designed to help check the status of all flags at any instance of the functional flow to trigger actions
+ * based on the flag status
+ */
 class CheckFlagStat extends Base{
 
     /**
-     * Methods to access and reset flags for checks are designed below
+     * Method checkFileForReqStat to access and reset flags for checks and accordingly switch the action in functional flow
+     * @return boolean
      */
 
     static boolean checkFileForReqStat(){
@@ -26,6 +32,12 @@ class CheckFlagStat extends Base{
 
     return val;
     }
+
+
+    /**
+     * Method checkFileForActKeyStat to access and reset flags for checks and accordingly switch the action in functional flow
+     * @return boolean yes or no
+     */
 
     static boolean checkFileForActKeyStat(){
 
