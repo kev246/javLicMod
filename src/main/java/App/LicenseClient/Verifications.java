@@ -23,10 +23,17 @@ class Verifications extends Base {
         @SuppressWarnings("unchecked")
         //The constructor of VerifyMessage class retrieves the byte arrays from the File and prints the message only if the signature is verified.
         public boolean verify(String filename, String keyFile) throws Exception {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
-            this.list = (List<byte[]>) in.readObject();
-            in.close();
+            ObjectInputStream in = null;
+            try {
+                in = new ObjectInputStream(new FileInputStream(filename));
 
+                this.list = (List<byte[]>) in.readObject();
+                in.close();
+            }
+catch (IOException e) {
+                    infoBox("Required file missing or Data incorrect, Please contact admin","ERROR :");
+                    System.exit(1);
+                }
             //System.out.println(verifySignature(list.get(0), list.get(1), keyFile) ? "VERIFIED MESSAGE" + "\n----------------\n" + new String(list.get(0)) : "Could not verify the signature.");
             return verifySignature(list.get(0), list.get(1), keyFile);
 
@@ -87,7 +94,8 @@ class Verifications extends Base {
      * encryption for machine ID using that specific key is same as the data created with same key after Activation key is
      * passed on to user.
      * @return boolean value showing if the verification is Pass or Fail
-     * @throws GeneralSecurityException if required files are missing     */
+     * @throws GeneralSecurityException if required files are missing
+     */
     boolean verifyPnPmData() throws GeneralSecurityException {
 
         final String PM_FILE = "KAEncrypted.properties";

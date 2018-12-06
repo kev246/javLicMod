@@ -100,7 +100,7 @@ class Base {
              System.exit(1);
          }else {
              System.out.println("file not found");
-             int val = yesNoBox("Please request for activation to access full mode??\n                          Request Now ???","User Confirmation");
+             int val = yesNoBox("Please request for activation to access full mode!\n                          Request Now ???","User Confirmation");
              switch(val)
              {
                  case 0:
@@ -129,7 +129,7 @@ class Base {
                     switch (val) {
                         case 0:
                             ActKey.startAct();
-                            makeflaggerActValueTrue();
+
                             break;
                         case 1:
                             break;
@@ -151,7 +151,7 @@ class Base {
      * @return yes or no
      */
 
-     static boolean checkIfFileExists(String fileName) {
+    static boolean checkIfFileExists(String fileName) {
          boolean found = false;
          try {
              File file = new File(fileName);

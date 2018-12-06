@@ -57,16 +57,21 @@ class ActKey extends Base {
      */
     protected static void startAct() {
         String InputKey = JOptionPane.showInputDialog("Please enter your Activation Key below:");
-        if (InputKey != null) {
+        if (InputKey != null && !InputKey.isEmpty()) {
             try {
                 makePnEncSigned(InputKey);
+                makeflaggerActValueTrue();
             } catch (GeneralSecurityException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }else{
-            JOptionPane.showMessageDialog(null,"Activation window closed ! \n please try again");
+            JOptionPane.showMessageDialog(null,"Activation window closed/cancelled ! \n           " +
+                    "              OR \n         " +
+                    "     No key inputted\n          " +
+                    "     Please try later.");
+            makeFlaggerActValueFalse();
         }
     }
 }
