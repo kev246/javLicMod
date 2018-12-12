@@ -95,11 +95,11 @@ class Base {
      * to weather you need to request or not until at least once requested.
      */
     protected static void requestPrompt(){
-         if (checkIfFileExists("./src/main/resources/privateKey")) {
-             System.out.println("file available");
+         if (checkIfFileExists("./src/main/resources/privateKey") && checkIfFileExists("./src/main/resources/PmEnc.properties")) {
+             System.out.println("file available meaning a;requested already once");
              System.exit(1);
          }else {
-             System.out.println("file not found");
+             System.out.println("file not found meaning not requested yet");
              int val = yesNoBox("Please request for activation to access full mode!\n                          Request Now ???","User Confirmation");
              switch(val)
              {
@@ -117,7 +117,7 @@ class Base {
 
     /***
      * activationPrompt method helps with triggering the StartAct main method (trigger for starting activation when key and digital
-     * signed file is received at user end after requesting is once done and file are avilable
+     * signed file is received at user end after requesting is once done and file are available
      * This prompt of Decision making is thrown only to user screen for inputs when the files required for activation is ready at
      * host side (signed file, Activation Key) and should stop prompting once the activation is made by user successfully.
      */

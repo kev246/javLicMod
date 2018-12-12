@@ -43,7 +43,20 @@ class ActKey extends Base {
         try {
             PnEnc.setProperty("KV",vd.dContent("MyData/SignedData.txt", "MyKeys/publicKey"));
         } catch (Exception e) {
-            infoBox("unable to locate datafile for activating full key","ERROR:");
+            infoBox("Wrong Data file content. Please contact admin","ERROR:");
+            PnEnc.setProperty("KV","WEFCDPE34432FWASOFNWEFOI32984SDFJOWER");
+            if (checkIfFileExists("./src/main/resources/privateKey")){
+                File file = new File("./src/main/resources/privateKey");
+                File f2 = new File("./MyData/SignedData.txt");
+                if (f2.delete()){
+                    System.out.println("deleted corruptdata file too");
+                }
+                if (file.delete()){
+                    System.out.println("deleted privateKey for re issuing request for activation");
+                    makeFlaggerActValueFalse();
+                }
+            }
+            System.out.println("restoring demo key value as the data file looks changed hence moving to demo version");
             e.printStackTrace();
         }
 

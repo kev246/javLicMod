@@ -1,5 +1,7 @@
 package App.LicenseClient;
 
+
+import java.io.FileWriter;
 import java.util.Properties;
 
 
@@ -43,7 +45,8 @@ public class Apple extends Base {
                         System.out.println("App running in FULL mode....");
                         makeflaggerActValueTrue();
                     }else {
-                        infoBox("Failed Activation, Please check with Support for more info !\n                DEMO MODE ACTIVATED","ERROR");
+                        infoBox("Failed Activation, Please check with Support for more info !" +
+                                "\n                DEMO MODE ACTIVATED","ERROR");
                         System.out.println("App starting in Demo Mode...");
                 /*
                 TODO Start App in Demo mode
@@ -56,6 +59,11 @@ public class Apple extends Base {
             }else {
                 infoBox("Failed Activation, Please check with Support for more info !","ERROR");
                 System.out.println("App starting in Demo Mode...");
+                Properties pnEnc = new Properties();
+                pnEnc.setProperty("KV","EEEEYYYYYOOOOOPPPPNNNNVVVVXXXXJJJJFF");
+                pnEnc.store(new FileWriter("KAEncrypted.properties"),"changed kv value..check lg");
+                System.out.println("wrong key inputted so pnEnc check failed hence making kv value to unknown data ");
+                makeFlaggerActValueFalse();
                 infoBox("Key identified is neither demo nor Full Version Key\n Please check with Support team !","ERROR");
                 /*
                 TODO Start App in Demo mode
@@ -63,7 +71,8 @@ public class Apple extends Base {
             }
         }else {
             System.out.println("Key identified as demo key hence , Starting App in Demo mode...");
-            infoBox("DEMO MODE ACTIVATED\nKey identified is Demo Key","INFO:");
+            infoBox("DEMO MODE ACTIVATED\n" +
+                    "Key identified is Demo Key","INFO:");
             requestPrompt();
             /*
             TODO Start App in Demo mode
