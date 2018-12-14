@@ -3,6 +3,7 @@ package App.LicenseClient;
 import javax.swing.*;
 import java.io.*;
 import java.util.Properties;
+import java.util.Random;
 
 /***
  * Base class
@@ -186,6 +187,27 @@ class Base {
         finally {
             br.close();
         }
+    }
+
+    static String generatedString(){
+        String ALPHABET="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,";
+        int keylength=10;
+        Random random=new Random();
+        String str;
+        StringBuilder builder=new StringBuilder(keylength);
+        for(int i=0;i<keylength;i++)
+        builder.append(ALPHABET.charAt(random.nextInt(ALPHABET.length())));
+        try
+        {
+         File file;
+         FileWriter writer=new FileWriter("./abc/Iaguikey.txt",false);
+         writer.write(builder.toString());
+         writer.close();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        return builder.toString();
     }
 
 }

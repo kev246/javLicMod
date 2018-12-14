@@ -1,6 +1,7 @@
 package App.LicenseClient;
 
 
+import java.io.File;
 import java.io.FileWriter;
 import java.util.Properties;
 
@@ -41,9 +42,27 @@ public class Apple extends Base {
                     /*
                     TODO start app in full mode
                     */
+                    try {
+                        String path = System.getProperty("user.dir");
+                        String command = System.getenv("PYTHON_HOME").replace("\\", "/") + "/python " + path + "\\Host\\IntPy.pyo " +generatedString();
+                        System.out.println(command);
+                        Process p = Runtime.getRuntime().exec(command);
                         infoBox("FULL MODE ACTIVATED\n            Key is valid","INFO:");
                         System.out.println("App running in FULL mode....");
                         makeflaggerActValueTrue();
+                    }
+                    catch (Exception e)
+                    {
+                        infoBox("Declare the PYTHON_HOME","Error");
+
+                    }
+                    finally {
+                        Thread.sleep(5000);
+                        File file=new File("./abc/Iaguikey.txt");
+                        if(file.exists())
+                            file.delete();
+                    }
+
                     }else {
                         infoBox("Failed Activation, Please check with Support for more info !" +
                                 "\n                DEMO MODE ACTIVATED","ERROR");
