@@ -62,7 +62,7 @@ class Base {
          }
      }
      /*
-     makeFlaggerActValueFalse Method to make flag value False for using it to make the Application flow conditional one
+     makeFlaggerActValueFalse Method to make  flag value False for using it to make the Application flow conditional one
       */
      protected static void makeFlaggerActValueFalse(){
          Properties p = loadPropertyFile("./src/main/resources/flagger.properties");
