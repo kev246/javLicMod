@@ -70,6 +70,6 @@ import java.util.List;
 
         public static void main(String[] args) throws Exception{
             String data = JOptionPane.showInputDialog("Type your message here");
-            new DigitalFileSigner(data, "src/main/resources/privateKey").writeToFile();
+            new DigitalFileSigner(data.trim(), "src/main/resources/privateKey").writeToFile();
         }
     }

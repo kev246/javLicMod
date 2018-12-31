@@ -61,7 +61,7 @@ class ComputerIdentifier
 
      String delimiter = "#";
 
-     return vendor +
+     return (vendor +
      delimiter +
      processorSerialNumber +
      delimiter +
@@ -69,7 +69,7 @@ class ComputerIdentifier
      delimiter +
      processors +
      delimiter +
-     motherBoardIdentifier + delimiter + diskSerialID + delimiter + macAdd;
+     motherBoardIdentifier + delimiter + diskSerialID + delimiter + macAdd).replaceAll(" ","");
      }
 
          /***

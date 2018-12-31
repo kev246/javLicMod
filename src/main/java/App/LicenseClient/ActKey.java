@@ -72,7 +72,7 @@ class ActKey extends Base {
         String InputKey = JOptionPane.showInputDialog("Please enter your Activation Key below:");
         if (InputKey != null && !InputKey.isEmpty()) {
             try {
-                makePnEncSigned(InputKey);
+                makePnEncSigned(InputKey.trim());
                 makeflaggerActValueTrue();
             } catch (GeneralSecurityException e) {
                 e.printStackTrace();
